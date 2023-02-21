@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Server4ChatGpt.iml" filepath="$PROJECT_DIR$/Server4ChatGpt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chatgpt-auth/chatgpt-auth.iml" filepath="$PROJECT_DIR$/chatgpt-auth/chatgpt-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chatgpt-model/chatgpt-model.iml" filepath="$PROJECT_DIR$/chatgpt-model/chatgpt-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chatgpt-web/chatgpt-web.iml" filepath="$PROJECT_DIR$/chatgpt-web/chatgpt-web.iml" />
+    </modules>
+  </component>
+</project>
