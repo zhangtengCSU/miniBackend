@@ -10,10 +10,10 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="chatgpt-auth" target="11" />
+      <module name="chatgpt-auth" target="1.8" />
       <module name="chatgpt-model" target="11" />
       <module name="chatgpt-web" target="11" />
-      <module name="Server4ChatGpt" target="11" />
+      <module name="Server4ChatGpt" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

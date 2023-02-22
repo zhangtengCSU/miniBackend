@@ -1,6 +1,6 @@
 # Use the official maven/Java 8 image to create a build artifact.
 # https://hub.docker.com/_/maven
-FROM openjdk:11-jre
+FROM openjdk:8
 
 # Copy local code to the container image.
 WORKDIR /Server4ChatGpt/chatgpt-auth

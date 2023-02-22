@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description
@@ -23,14 +24,12 @@ public class MiniProgramAuthService {
 
     public String auth4Mini(MiniAuthRequest dto) {
         String url = URL_MINI_AUTH;
-        String responseStr = OkHttpUtils.get(url, new HashMap<>(4) {
-            {
-                put("appid", dto.getAppId());
-                put("secret", dto.getSecret());
-                put("js_code", dto.getJsCode());
-                put("grant_type", "authorization_code");
-            }
-        });
+        Map<String,String> queryMap = new HashMap<>();
+        queryMap.put("appid", dto.getAppId());
+        queryMap.put("secret", dto.getSecret());
+        queryMap.put("js_code", dto.getJsCode());
+        queryMap.put("grant_type", "authorization_code");
+        String responseStr = OkHttpUtils.get(url, queryMap);
         WxAuthResponse wxAuthResponse = new Gson().fromJson(responseStr, WxAuthResponse.class);
         // check if exist user
         if (!StringUtils.hasText(wxAuthResponse.getOpenid())) {
