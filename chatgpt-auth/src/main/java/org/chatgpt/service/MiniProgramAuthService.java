@@ -1,16 +1,15 @@
-package service;
+package org.chatgpt.service;
 
 import com.google.gson.Gson;
-import domain.MiniAuthRequest;
-import domain.WxAuthResponse;
-import domain.enums.ResponseEnum;
-import exceptions.GptException;
+import org.chatgpt.domain.MiniAuthRequest;
+import org.chatgpt.domain.WxAuthResponse;
+import org.chatgpt.domain.enums.ResponseEnum;
+import org.chatgpt.exceptions.GptException;
+import org.chatgpt.utils.JwtUtil;
+import org.chatgpt.utils.OkHttpUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import utils.JwtUtil;
-import utils.OkHttpUtils;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 
 /**

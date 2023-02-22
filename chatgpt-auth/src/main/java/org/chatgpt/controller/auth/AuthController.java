@@ -1,13 +1,11 @@
 package org.chatgpt.controller.auth;
 
-import domain.MiniAuthRequest;
-import domain.enums.ResponseEnum;
-import exceptions.GptException;
-import lombok.extern.slf4j.Slf4j;
 import org.chatgpt.domain.GptHttpResponse;
+import org.chatgpt.domain.MiniAuthRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
-import service.MiniProgramAuthService;
+import org.chatgpt.service.MiniProgramAuthService;
 
 import javax.annotation.Resource;
 
@@ -18,6 +16,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @Slf4j
+@RequestMapping("/auth")
 public class AuthController extends BaseController {
 
     @Override

@@ -1,7 +1,7 @@
 package org.chatgpt.controller.auth;
 
-import exceptions.GptException;
 import org.chatgpt.domain.GptHttpResponse;
+import org.chatgpt.exceptions.GptException;
 import org.slf4j.Logger;
 
 import java.util.Optional;

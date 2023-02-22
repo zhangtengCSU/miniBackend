@@ -1,6 +1,6 @@
-package exceptions;
+package org.chatgpt.exceptions;
 
-import domain.enums.ResponseEnum;
+import org.chatgpt.domain.enums.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 
 /**

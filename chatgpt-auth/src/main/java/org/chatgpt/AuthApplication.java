@@ -5,12 +5,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @Description
- * @Date 2023/2/2 18:51
+ * @Date 2023/2/22 13:52
  * @Author Rookie
  */
 @SpringBootApplication
-public class ChatgptWebApplication {
+public class AuthApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ChatgptWebApplication.class, args);
+        SpringApplication.run(AuthApplication.class, args);
     }
+
 }

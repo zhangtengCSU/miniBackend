@@ -1,4 +1,4 @@
-package domain.enums;
+package org.chatgpt.domain.enums;
 
 import lombok.Getter;
 
