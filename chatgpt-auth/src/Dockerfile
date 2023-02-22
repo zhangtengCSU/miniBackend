@@ -3,7 +3,7 @@
 FROM openjdk:11-jre
 
 # Copy local code to the container image.
-WORKDIR /Server4ChatGpt/chatgpt-web
+WORKDIR /Server4ChatGpt/chatgpt-auth
 COPY src ./src
 
 # Build a release artifact.
