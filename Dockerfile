@@ -4,7 +4,7 @@ FROM openjdk:8
 
 # Copy local code to the container image.
 WORKDIR /Server4ChatGpt/chatgpt-auth
-COPY src ./src
+COPY /Server4ChatGpt/chatgpt-auth/src .
 
 # Build a release artifact.
 RUN mvn package -DskipTests
