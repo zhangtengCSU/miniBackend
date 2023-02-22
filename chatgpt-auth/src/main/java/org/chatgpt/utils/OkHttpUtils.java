@@ -1,5 +1,6 @@
 package org.chatgpt.utils;
 
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.util.CollectionUtils;

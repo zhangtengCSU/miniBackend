@@ -1,9 +1,35 @@
 package org.chatgpt.controller.chat;
 
+import lombok.extern.slf4j.Slf4j;
+import org.chatgpt.controller.auth.BaseController;
+import org.chatgpt.domain.ChatRequest;
+import org.chatgpt.domain.GptHttpResponse;
+import org.chatgpt.service.ChatWithModelService;
+import org.slf4j.Logger;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
 /**
  * @Description
  * @Date 2023/2/12 17:03
  * @Author Rookie
  */
-public class ChatController {
+@RequestMapping("/chat")
+@RestController
+@Slf4j
+public class ChatController extends BaseController {
+
+    @Override
+    protected Logger getLog() {
+        return log;
+    }
+    @Resource
+    private ChatWithModelService chatWithModelService;
+
+    @RequestMapping
+    public GptHttpResponse<String> chatWithModel(ChatRequest request) {
+        return GptHttpResponse.SUCCEED(chatWithModelService.chat(request.getPrompt())).build();
+    }
 }
