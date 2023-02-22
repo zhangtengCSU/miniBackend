@@ -4,9 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>chatgpt-web</module>
         <module>chatgpt-auth</module>
-        <module>chatgpt-model</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
