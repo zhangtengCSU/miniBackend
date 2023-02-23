@@ -7,6 +7,7 @@ import org.mini.common.http.GptHttpResponse;
 import org.mini.chat.service.ChatWithModelService;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -28,7 +29,7 @@ public class ChatController extends BaseController {
     @Resource
     private ChatWithModelService chatWithModelService;
 
-    @RequestMapping("/send")
+    @RequestMapping(value = "/send",method = RequestMethod.POST)
     public GptHttpResponse<String> chatWithModel(ChatRequest request) {
         return GptHttpResponse.SUCCEED(chatWithModelService.chat(request.getPrompt())).build();
     }
