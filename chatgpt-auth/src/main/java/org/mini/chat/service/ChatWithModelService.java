@@ -3,6 +3,7 @@ package org.mini.chat.service;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.mini.apikey.service.ApiKeyPoolService;
+import org.mini.chat.domain.completions.ChatCompletionsResponseFromModel;
 import org.mini.common.utils.OkHttpUtils;
 import org.mini.model.service.ModelGptService;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,8 @@ public class ChatWithModelService {
         // 2.select apiKey
         String apiKey = apiKeyPoolService.selectKey();
         // 3.do post
-        String answer = doPostRequest(prompt, apiKey, type);
+        ChatCompletionsResponseFromModel chatCompletionsResponseFromModel = new Gson().fromJson(doPostRequest(prompt, apiKey, type), ChatCompletionsResponseFromModel.class);
+        String answer = chatCompletionsResponseFromModel.getChoices().get(0).getText();
         return answer;
     }
 
