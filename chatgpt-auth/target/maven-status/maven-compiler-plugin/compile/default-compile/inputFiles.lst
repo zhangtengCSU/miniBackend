@@ -1,0 +1,15 @@
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\domain\WxAuthResponse.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\domain\enums\ResponseEnum.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\domain\GptHttpResponse.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\AuthApplication.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\utils\OkHttpUtils.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\domain\MiniAuthRequest.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\exceptions\GptException.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\service\ChatWithModelService.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\utils\JwtUtil.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\controller\auth\BaseController.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\service\MiniProgramAuthService.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\controller\auth\AuthController.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\domain\enums\WxResponseCodeEnum.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\domain\ChatRequest.java
+D:\ProjectOfBlockChain\Server4ChatGpt\chatgpt-auth\src\main\java\org\chatgpt\controller\chat\ChatController.java
