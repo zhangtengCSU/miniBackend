@@ -33,8 +33,6 @@ public class ChatWithModelService {
 
     public static final String URL_MINI_CHAT_PREFIX = "https://api.openai.com/v1/";
 
-    public static final Integer MAX_PROMPT = 4000;
-
     public String chat(String prompt) {
         String answer = null;
         // 0.check not null

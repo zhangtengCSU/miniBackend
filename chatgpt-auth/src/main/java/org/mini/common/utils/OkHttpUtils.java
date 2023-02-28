@@ -32,12 +32,18 @@ public class OkHttpUtils {
      */
     public final static long KEEP_ALIVE_DURATION = 30L;
 
+    public final static long READ_TIMEOUT = 40L;
+
+    public final static long WRITE_TIMEOUT = 40L;
+
     /**
      * client
      * config for retry
      */
     private final static OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
             .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+            .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
             .connectionPool(new ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_DURATION, TimeUnit.MINUTES))
             .build();
 

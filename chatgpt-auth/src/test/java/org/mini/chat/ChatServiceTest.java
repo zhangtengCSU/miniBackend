@@ -3,6 +3,7 @@ package org.mini.chat;
 import lombok.extern.slf4j.Slf4j;
 import org.mini.chat.service.ChatWithModelService;
 import org.junit.jupiter.api.Test;
+import org.mini.token.TokenProcessService;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -17,8 +18,13 @@ import javax.annotation.Resource;
 public class ChatServiceTest {
     @Resource
     ChatWithModelService chatWithModelService;
+
+    @Resource
+    TokenProcessService tokenProcessService;
     @Test
     void testChat() {
-        log.info(chatWithModelService.chat("讲个笑话吧"));
+        String prompt = "讲个笑话吧";
+        log.info(tokenProcessService.countToken(prompt).toString());
+        log.info(chatWithModelService.chat(prompt));
     }
 }

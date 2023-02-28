@@ -17,10 +17,14 @@ import java.util.List;
 @Service
 @Slf4j
 public class TokenProcessServiceImpl implements TokenProcessService {
+
+    public static final Integer MAX_PROMPT = 4000;
+
+
     @Override
     public Integer countToken(String prompt) {
         Gpt2Tokenizer tokenizer = Gpt2Tokenizer.fromPretrained("token/");
-        List<Integer> result = tokenizer.encode("prompt");
-        return result.size();
+        List<Integer> result = tokenizer.encode(prompt);
+        return MAX_PROMPT - result.size();
     }
 }
