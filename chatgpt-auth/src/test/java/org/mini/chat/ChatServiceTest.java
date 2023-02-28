@@ -19,6 +19,6 @@ public class ChatServiceTest {
     ChatWithModelService chatWithModelService;
     @Test
     void testChat() {
-        log.info(chatWithModelService.chat("tell a joke"));
+        log.info(chatWithModelService.chat("讲个笑话吧"));
     }
 }
