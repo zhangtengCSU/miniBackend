@@ -4,8 +4,6 @@ import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.logging.log4j.util.Chars;
 import org.apache.tomcat.util.json.JSONParser;
 import org.apache.tomcat.util.json.ParseException;
-import org.assertj.core.util.Maps;
-import org.assertj.core.util.Sets;
 import org.mini.token.domain.TokenizerConstant;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.io.ClassPathResource;
@@ -61,7 +59,7 @@ public class Gpt2Tokenizer {
     }
 
     private HashSet<MutablePair<String, String>> getPairs(List<String> word) {
-        HashSet<MutablePair<String, String>> pairs = Sets.newHashSet();
+        HashSet<MutablePair<String, String>> pairs = new HashSet<>();
         String prevCharacter = word.get(0);
         for (String character : word.subList(1, word.size())) {
             pairs.add(new MutablePair<>(prevCharacter, character));
