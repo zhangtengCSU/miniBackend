@@ -10,7 +10,6 @@ import org.springframework.context.annotation.ImportResource;
  * @Author Rookie
  */
 @SpringBootApplication
-@ImportResource(locations = {"classpath*:token/*"})
 public class ChatApplication {
     public static void main(String[] args) {
         SpringApplication.run(ChatApplication.class, args);

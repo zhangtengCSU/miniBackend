@@ -36,6 +36,7 @@ public class ChatWithModelService {
     public static final Integer MAX_PROMPT = 4000;
 
     public String chat(String prompt) {
+        String answer = null;
         // 0.check not null
         if (!StringUtils.hasText(prompt)) {
             throw GptException.build(ResponseEnum.PROMPT_IS_NULL);
@@ -47,7 +48,11 @@ public class ChatWithModelService {
         // 3.do post
         ChatCompletionsResponseFromModel chatCompletionsResponseFromModel =
                 new Gson().fromJson(doPostRequest(prompt, apiKey, type), ChatCompletionsResponseFromModel.class);
-        String answer = chatCompletionsResponseFromModel.getChoices().get(0).getText();
+        try {
+            answer = chatCompletionsResponseFromModel.getChoices().get(0).getText();
+        } catch (NullPointerException e) {
+            return null;
+        }
         return answer;
     }
 
