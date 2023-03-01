@@ -1,18 +1,23 @@
 package org.mini.token;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.logging.log4j.util.Chars;
 import org.apache.tomcat.util.json.JSONParser;
 import org.apache.tomcat.util.json.ParseException;
 import org.mini.token.domain.TokenizerConstant;
-import org.springframework.beans.BeanUtils;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.repository.init.ResourceReader;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -31,16 +36,28 @@ public class Gpt2Tokenizer {
     private List<String> bpe;
     private Map<String, Object> encoder;
     private Map<Object, String> decoder;
+    static FileSystem zipfs = null;
 
     private Map<String, String> cache = new HashMap<>();
     private Map<Integer, String> byte2unicode = byteToUnicode();
     private Map<MutablePair<String, String>, Integer> bpeRanks = new HashMap<>();
     private Pattern pattern = Pattern.compile("'s|'t|'re|'ve|'m|'ll|'d| ?\\p{L}+| ?\\p{N}+| ?[^\\s\\p{L}\\p{N}]+|\\s+(?!\\S)|\\s+");
 
+
     private Gpt2Tokenizer(String path) {
         ClassPathResource encoderFile = new ClassPathResource(Paths.get(path, TokenizerConstant.ENCODER_FILE_NAME).toString());
         ClassPathResource bpeFile = new ClassPathResource(Paths.get(path, TokenizerConstant.VOCAB_FILE_NAME).toString());
+
+        Map<String, String> env = new HashMap<>();
+        env.put("create", "true");
         try {
+            try {
+                URI uri = ResourceReader.class.getClassLoader().getResource("token/" + TokenizerConstant.VOCAB_FILE_NAME).toURI();
+                zipfs = FileSystems.newFileSystem(uri, env);
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
             this.encoder = new JSONParser(new InputStreamReader(encoderFile.getInputStream(), StandardCharsets.UTF_8)).parseObject();
             this.decoder = encoder.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             this.bpe = Files.readAllLines(Paths.get(bpeFile.getURI()), StandardCharsets.UTF_8);
@@ -54,9 +71,11 @@ public class Gpt2Tokenizer {
         }
     }
 
+
     public static Gpt2Tokenizer fromPretrained(String path) {
         return new Gpt2Tokenizer(path);
     }
+
 
     private HashSet<MutablePair<String, String>> getPairs(List<String> word) {
         HashSet<MutablePair<String, String>> pairs = new HashSet<>();

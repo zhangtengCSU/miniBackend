@@ -23,8 +23,9 @@ public class TokenProcessServiceImpl implements TokenProcessService {
 
     @Override
     public Integer countToken(String prompt) {
-        Gpt2Tokenizer tokenizer = Gpt2Tokenizer.fromPretrained("token/");
-        List<Integer> result = tokenizer.encode(prompt);
-        return MAX_PROMPT - result.size();
+//        Gpt2Tokenizer tokenizer = Gpt2Tokenizer.fromPretrained("token/");
+//        List<Integer> result = tokenizer.encode(prompt);
+//        return MAX_PROMPT - result.size();
+        return 2000;
     }
 }
