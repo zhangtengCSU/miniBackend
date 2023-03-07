@@ -3,7 +3,7 @@ package org.mini.chat.service;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.mini.apikey.service.ApiKeyPoolService;
-import org.mini.chat.domain.completions.ChatCompletionsResponseFromModel;
+import org.mini.chat.domain.completions.CompletionsResponseFromModel;
 import org.mini.common.exceptions.GptException;
 import org.mini.common.http.ResponseEnum;
 import org.mini.common.utils.OkHttpUtils;
@@ -44,10 +44,10 @@ public class ChatWithModelService {
         // 2.select apiKey
         String apiKey = apiKeyPoolService.selectKey();
         // 3.do post
-        ChatCompletionsResponseFromModel chatCompletionsResponseFromModel =
-                new Gson().fromJson(doPostRequest(prompt, apiKey, type), ChatCompletionsResponseFromModel.class);
+        CompletionsResponseFromModel completionsResponseFromModel =
+                new Gson().fromJson(doPostRequest(prompt, apiKey, type), CompletionsResponseFromModel.class);
         try {
-            answer = chatCompletionsResponseFromModel.getChoices().get(0).getText();
+            answer = completionsResponseFromModel.getChoices().get(0).getText();
         } catch (NullPointerException e) {
             return null;
         }

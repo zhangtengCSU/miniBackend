@@ -26,6 +26,6 @@ public class TokenProcessServiceImpl implements TokenProcessService {
 //        Gpt2Tokenizer tokenizer = Gpt2Tokenizer.fromPretrained("token/");
 //        List<Integer> result = tokenizer.encode(prompt);
 //        return MAX_PROMPT - result.size();
-        return 2000;
+        return 20;
     }
 }

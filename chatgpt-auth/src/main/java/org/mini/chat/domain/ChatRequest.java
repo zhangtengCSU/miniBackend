@@ -1,5 +1,6 @@
 package org.mini.chat.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -8,6 +9,8 @@ import lombok.Data;
  * @Author Rookie
  */
 @Data
+@Builder
 public class ChatRequest {
     private String prompt;
+    private String bizCode;
 }

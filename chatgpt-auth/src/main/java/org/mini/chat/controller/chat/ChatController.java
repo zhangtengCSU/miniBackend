@@ -1,6 +1,7 @@
 package org.mini.chat.controller.chat;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mini.chat.service.ChatWithMicrosoftService;
 import org.mini.common.http.BaseController;
 import org.mini.chat.domain.ChatRequest;
 import org.mini.common.http.GptHttpResponse;
@@ -30,9 +31,11 @@ public class ChatController extends BaseController {
 
     @Resource
     private ChatWithModelService chatWithModelService;
+    @Resource
+    private ChatWithMicrosoftService chatWithMicrosoftService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST)
     public GptHttpResponse<String> chatWithModel(@RequestBody ChatRequest request) {
-        return dealWithException(request.getPrompt(), chatWithModelService::chat, "call gpt model");
+        return dealWithException(request, chatWithMicrosoftService::chat, "call gpt model");
     }
 }

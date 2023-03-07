@@ -18,7 +18,7 @@ public class OkHttpUtils {
     /**
      * max connection time
      */
-    public final static int CONNECTION_TIMEOUT = 5;
+    public final static int CONNECTION_TIMEOUT = 60;
     /**
      * JSON format
      */
@@ -41,6 +41,7 @@ public class OkHttpUtils {
      * config for retry
      */
     private final static OkHttpClient HTTP_CLIENT = new OkHttpClient.Builder()
+            .retryOnConnectionFailure(true)
             .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
