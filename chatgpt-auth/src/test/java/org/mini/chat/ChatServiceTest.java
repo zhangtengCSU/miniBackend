@@ -16,6 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ChatServiceTest {
     @Test
     void testRedis() {
-        log.info(RedisUtil.getString("kty"));
+        RedisUtil.setString("k1","1");
+        RedisUtil.setString("k1","2");
+        RedisUtil.setString("k1","3");
+        RedisUtil.setString("k1","4");
     }
 }

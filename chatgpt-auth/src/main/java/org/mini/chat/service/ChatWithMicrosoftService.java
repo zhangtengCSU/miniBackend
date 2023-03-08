@@ -68,10 +68,9 @@ public class ChatWithMicrosoftService {
     private String getFromCache(String openId) {
         // 1.get answer
         String fromCache = cacheService.getFromCache(openId);
-        log.info("getFromCache:{}",fromCache);
         // 2.if not null,then delete it
         if (StringUtils.hasText(fromCache)) {
-            cacheService.deleteCache(openId);
+            log.info("getFromCache:{}",fromCache);
         }
         return fromCache;
     }
