@@ -26,8 +26,6 @@ import java.util.concurrent.FutureTask;
 @Service
 @Slf4j
 public class ChatWithMicrosoftService {
-    @Resource(name = "gptThread")
-    private ThreadPoolTaskExecutor executor;
     @Resource
     private CacheService cacheService;
 
