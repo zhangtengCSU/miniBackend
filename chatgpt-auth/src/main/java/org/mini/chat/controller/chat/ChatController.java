@@ -5,7 +5,6 @@ import org.mini.chat.service.ChatWithMicrosoftService;
 import org.mini.common.http.BaseController;
 import org.mini.chat.domain.ChatRequest;
 import org.mini.common.http.GptHttpResponse;
-import org.mini.chat.service.ChatWithModelService;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +25,6 @@ public class ChatController extends BaseController {
         return log;
     }
 
-    @Resource
-    private ChatWithModelService chatWithModelService;
     @Resource
     private ChatWithMicrosoftService chatWithMicrosoftService;
 
