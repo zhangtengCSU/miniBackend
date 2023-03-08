@@ -33,7 +33,8 @@ public class ChatWithMicrosoftService {
         int times = Integer.parseInt(request.getTimes());
         Long startTime = GptDateUtil.currentSystemTimeAsLong();
         // 1.check if call childThread
-        if (request.getTimes().equals("0")) {
+        if (times == 0) {
+            log.info("times = {},开始执行子线程",times);
             doThreadTask(request);
         }
         // 2.if not,query cache
@@ -44,7 +45,7 @@ public class ChatWithMicrosoftService {
                 if (times == 4) {
                     return "给AI问无语了，请联系开发者gptplus@163.com反馈一下吧！";
                 }
-                if (0 < times && times < 5) {
+                if (0 <= times && times < 5) {
                     return null;
                 }
             }
@@ -67,6 +68,7 @@ public class ChatWithMicrosoftService {
     private String getFromCache(String openId) {
         // 1.get answer
         String fromCache = cacheService.getFromCache(openId);
+        log.info("getFromCache:{}",fromCache);
         // 2.if not null,then delete it
         if (StringUtils.hasText(fromCache)) {
             cacheService.deleteCache(openId);

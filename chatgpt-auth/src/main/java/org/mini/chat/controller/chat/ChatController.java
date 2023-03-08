@@ -1,5 +1,8 @@
 package org.mini.chat.controller.chat;
 
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.mini.chat.service.ChatWithMicrosoftService;
 import org.mini.common.http.BaseController;
@@ -31,6 +34,8 @@ public class ChatController extends BaseController {
     @RequestMapping(value = "/send", method = RequestMethod.POST)
     public GptHttpResponse<String> chatWithModel(@RequestBody ChatRequest request, @RequestHeader("X-WX-OPENID") String openId) {
         request.setOpenId(openId);
+        log.info("get OpenId{} in controller",openId);
+        log.info("Request:{}", JSONUtil.toJsonStr(request));
         return dealWithException(request, chatWithMicrosoftService::callModelAsync, "call gpt model");
     }
 }
