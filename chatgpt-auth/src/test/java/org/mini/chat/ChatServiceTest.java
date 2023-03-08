@@ -2,6 +2,8 @@ package org.mini.chat;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.mini.common.utils.RedisUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -12,4 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 @Slf4j
 public class ChatServiceTest {
+    @Test
+    void testRedis() {
+        log.info(RedisUtil.getString("kty"));
+    }
 }
