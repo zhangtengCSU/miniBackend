@@ -13,4 +13,9 @@ import lombok.Data;
 public class ChatRequest {
     private String prompt;
     private String bizCode;
+    private String times;
+    /**
+     * not necessary
+     */
+    private String openId;
 }

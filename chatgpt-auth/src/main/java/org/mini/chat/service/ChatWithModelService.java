@@ -2,13 +2,13 @@ package org.mini.chat.service;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.mini.apikey.service.ApiKeyPoolService;
+import org.mini.deprecated.apikey.service.ApiKeyPoolService;
 import org.mini.chat.domain.completions.CompletionsResponseFromModel;
 import org.mini.common.exceptions.GptException;
 import org.mini.common.http.ResponseEnum;
 import org.mini.common.utils.OkHttpUtils;
-import org.mini.model.service.ModelGptService;
-import org.mini.token.TokenProcessService;
+import org.mini.deprecated.model.service.ModelGptService;
+import org.mini.deprecated.token.TokenProcessService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 

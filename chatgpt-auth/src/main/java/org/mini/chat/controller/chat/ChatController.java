@@ -7,10 +7,7 @@ import org.mini.chat.domain.ChatRequest;
 import org.mini.common.http.GptHttpResponse;
 import org.mini.chat.service.ChatWithModelService;
 import org.slf4j.Logger;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -35,7 +32,8 @@ public class ChatController extends BaseController {
     private ChatWithMicrosoftService chatWithMicrosoftService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST)
-    public GptHttpResponse<String> chatWithModel(@RequestBody ChatRequest request) {
-        return dealWithException(request, chatWithMicrosoftService::chat, "call gpt model");
+    public GptHttpResponse<String> chatWithModel(@RequestBody ChatRequest request, @RequestHeader("X-WX-OPENID") String openId) {
+        request.setOpenId(openId);
+        return dealWithException(request, chatWithMicrosoftService::callModelAsync, "call gpt model");
     }
 }
