@@ -46,15 +46,18 @@ public class ChatWithMicrosoftService {
                     return "给AI问无语了，请联系开发者gptplus@163.com反馈一下吧！";
                 }
                 if (0 <= times && times < 5) {
+                    log.info("main finished:timeout");
                     return null;
                 }
             }
             // b. do get cache
             String answer = getFromCache(request.getOpenId(), request.getRequestId());
             if (StringUtils.hasText(answer)) {
+                log.info("main finished get from cache");
                 return answer;
             }
         }
+
     }
 
     private void doThreadTask(ChatRequest request) {

@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.mini.chat.domain.ChatRequest;
 import org.mini.chat.service.ChatWithMicrosoftService;
+import org.mini.chat.service.cache.CacheService;
 import org.mini.common.utils.RedisUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,17 +21,16 @@ import javax.annotation.Resource;
 public class ChatServiceTest {
     @Resource
     private ChatWithMicrosoftService chatWithMicrosoftService;
+    @Resource
+    private CacheService cacheService;
     @Test
     void testRedis() {
-        RedisUtil.setString("k1","1");
-        RedisUtil.setString("k1","2");
-        RedisUtil.setString("k1","3");
-        RedisUtil.setString("k1","4");
+        cacheService.save2Cache("x1","x1","x1");
     }
 
     @Test
     void call() {
-        ChatRequest build = ChatRequest.builder().prompt("你好").bizCode("1").openId("0001").times("0").build();
+        ChatRequest build = ChatRequest.builder().prompt("你好").bizCode("1").openId("0002").times("0").requestId("123eeasfaerq2").build();
         chatWithMicrosoftService.callModelAsync(build);
     }
 }

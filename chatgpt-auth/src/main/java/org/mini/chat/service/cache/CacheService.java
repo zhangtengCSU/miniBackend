@@ -1,9 +1,11 @@
 package org.mini.chat.service.cache;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mini.common.redis.JedisUtil;
 import org.mini.common.utils.OkHttpUtils;
 import org.mini.common.utils.RedisUtil;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +21,11 @@ public class CacheService {
     public static final String ANSWER_REDIS_PREFIX = "Answer:";
 
     public Boolean save2Cache(String answer, String openId, String requestId) {
-        return RedisUtil.setString(ANSWER_REDIS_PREFIX + openId + ":" + requestId, answer);
+        Jedis jedis = JedisUtil.getJedis();
+        String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 60, answer);
+        jedis.close();
+        log.info(setex);
+        return true;
     }
 
     public Boolean deleteCache(String openId) {
@@ -27,7 +33,9 @@ public class CacheService {
     }
 
     public String getFromCache(String openId, String requestId) {
-        return RedisUtil.getString(ANSWER_REDIS_PREFIX + openId + ":" + requestId);
+        Jedis jedis = JedisUtil.getJedis();
+        String res = jedis.get(ANSWER_REDIS_PREFIX + openId + ":" + requestId);
+        return res;
     }
 
 }
