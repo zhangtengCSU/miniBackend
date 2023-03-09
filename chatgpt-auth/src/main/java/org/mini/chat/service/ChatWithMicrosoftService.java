@@ -6,11 +6,13 @@ import org.mini.chat.domain.ChatRequest;
 import org.mini.chat.service.cache.CacheService;
 import org.mini.common.exceptions.GptException;
 import org.mini.common.http.ResponseEnum;
+import org.mini.common.redis.JedisUtil;
 import org.mini.common.utils.GptDateUtil;
 import org.mini.common.utils.OkHttpUtils;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -28,6 +30,7 @@ import java.util.concurrent.FutureTask;
 public class ChatWithMicrosoftService {
     @Resource
     private CacheService cacheService;
+    public static final String ANSWER_REDIS_PREFIX = "Answer:";
 
     public String callModelAsync(ChatRequest request) {
         int times = Integer.parseInt(request.getTimes());
@@ -42,6 +45,7 @@ public class ChatWithMicrosoftService {
             Long nowTime = GptDateUtil.currentSystemTimeAsLong();
             // a. no response
             if (nowTime - startTime > 10 * 1000) {
+                log.info("本次请求answer超时了，需要直接返回！");
                 if (times == 4) {
                     return "给AI问无语了，请联系开发者gptplus@163.com反馈一下吧！";
                 }
@@ -51,9 +55,20 @@ public class ChatWithMicrosoftService {
                 }
             }
             // b. do get cache
-            String answer = getFromCache(request.getOpenId(), request.getRequestId());
+            Jedis jedis = null;
+            String answer = null;
+            try {
+                jedis = JedisUtil.getJedis();
+                answer = jedis.get(ANSWER_REDIS_PREFIX + request.getOpenId() + ":" + request.getRequestId());
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            } finally {
+                if (jedis != null) {
+                    jedis.close();
+                }
+            }
             if (StringUtils.hasText(answer)) {
-                log.info("main finished get from cache");
+                log.info("main finished , get answer from cache");
                 return answer;
             }
         }
