@@ -41,7 +41,7 @@ public class ChatWithMicrosoftService {
         while (true) {
             Long nowTime = GptDateUtil.currentSystemTimeAsLong();
             // a. no response
-            if (nowTime - startTime > 13 * 1000) {
+            if (nowTime - startTime > 10 * 1000) {
                 if (times == 4) {
                     return "给AI问无语了，请联系开发者gptplus@163.com反馈一下吧！";
                 }
