@@ -34,7 +34,7 @@ public class ChatWithMicrosoftService {
         Long startTime = GptDateUtil.currentSystemTimeAsLong();
         // 1.check if call childThread
         if (times == 0) {
-            log.info("times = {},开始执行子线程",times);
+            log.info("times = {},开始执行子线程", times);
             doThreadTask(request);
         }
         // 2.if not,query cache
@@ -50,7 +50,7 @@ public class ChatWithMicrosoftService {
                 }
             }
             // b. do get cache
-            String answer = getFromCache(request.getOpenId());
+            String answer = getFromCache(request.getOpenId(), request.getRequestId());
             if (StringUtils.hasText(answer)) {
                 return answer;
             }
@@ -58,19 +58,19 @@ public class ChatWithMicrosoftService {
     }
 
     private void doThreadTask(ChatRequest request) {
-        Callable<String> childThread = new ModelChatThread(request.getPrompt(), request.getBizCode(), request.getOpenId());
+        Callable<String> childThread = new ModelChatThread(request.getPrompt(), request.getBizCode(), request.getOpenId(), request.getRequestId());
         FutureTask<String> futureTask = new FutureTask<>(childThread);
         //FutureTask对象作为Thread对象的target创建新的线程
         Thread thread = new Thread(futureTask);
         thread.start();
     }
 
-    private String getFromCache(String openId) {
+    private String getFromCache(String openId, String requestId) {
         // 1.get answer
-        String fromCache = cacheService.getFromCache(openId);
+        String fromCache = cacheService.getFromCache(openId, requestId);
         // 2.if not null,then delete it
         if (StringUtils.hasText(fromCache)) {
-            log.info("getFromCache:{}",fromCache);
+            log.info("getFromCache:{}", fromCache);
         }
         return fromCache;
     }

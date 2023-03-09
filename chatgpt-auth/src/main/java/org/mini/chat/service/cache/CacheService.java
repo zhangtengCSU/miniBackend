@@ -18,16 +18,16 @@ import java.util.Map;
 public class CacheService {
     public static final String ANSWER_REDIS_PREFIX = "Answer:";
 
-    public Boolean save2Cache(String answer, String openId) {
-        return RedisUtil.setString(ANSWER_REDIS_PREFIX + openId, answer);
+    public Boolean save2Cache(String answer, String openId, String requestId) {
+        return RedisUtil.setString(ANSWER_REDIS_PREFIX + openId + ":" + requestId, answer);
     }
 
     public Boolean deleteCache(String openId) {
         return RedisUtil.delete(ANSWER_REDIS_PREFIX + openId);
     }
 
-    public String getFromCache(String openId) {
-        return RedisUtil.getString(ANSWER_REDIS_PREFIX + openId);
+    public String getFromCache(String openId, String requestId) {
+        return RedisUtil.getString(ANSWER_REDIS_PREFIX + openId + ":" + requestId);
     }
 
 }

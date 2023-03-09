@@ -2,6 +2,7 @@ package org.mini.chat.service;
 
 import com.google.gson.Gson;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.mini.chat.domain.ChatRequest;
 import org.mini.chat.service.cache.CacheService;
 import org.mini.common.exceptions.GptException;
@@ -19,6 +20,7 @@ import java.util.concurrent.Callable;
  * @Author Rookie
  */
 @Data
+@Slf4j
 public class ModelChatThread implements Callable<String> {
     @Resource
     private CacheService cacheService;
@@ -28,15 +30,21 @@ public class ModelChatThread implements Callable<String> {
     private String prompt;
     private String bizCode;
     private String openId;
+    private String requestId;
 
-    ModelChatThread(String prompt, String bizCode, String openId) {
+
+    ModelChatThread(String prompt, String bizCode, String openId, String requestId) {
         this.prompt = prompt;
         this.bizCode = bizCode;
         this.openId = openId;
+        this.requestId = requestId;
     }
 
     @Override
     public String call() throws Exception {
+        log.info("prompt:{}", prompt);
+        log.info("bizCode:{}", bizCode);
+        log.info("openId:{}", openId);
         String res = null;
         // 1.make body params
         Map<String, Object> params = new HashMap<>();
@@ -47,11 +55,9 @@ public class ModelChatThread implements Callable<String> {
         headers.put("Content-Type", "application/json");
         // 3.do request
         res = OkHttpUtils.post(URL_MICRO_CHAT, headers, new Gson().toJson(params));
-        save2Cache(res, openId);
+        log.info("answer:{}", res);
+        Boolean aBoolean = cacheService.save2Cache(res, openId, requestId);
+        log.info(String.valueOf(aBoolean));
         return res;
-    }
-
-    private void save2Cache(String answer, String openId) {
-        cacheService.save2Cache(answer, openId);
     }
 }

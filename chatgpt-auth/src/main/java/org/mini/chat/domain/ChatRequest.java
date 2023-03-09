@@ -14,6 +14,7 @@ public class ChatRequest {
     private String prompt;
     private String bizCode;
     private String times;
+    private String requestId;
     /**
      * not necessary
      */
