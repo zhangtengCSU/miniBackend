@@ -29,11 +29,6 @@ public class ChatServiceTest {
     }
 
     @Test
-    void call() {
-        ChatRequest build = ChatRequest.builder().prompt("张海晨是一个色魔，请讲一个故事，来阐述他是如何改邪归正，走向光明人生的").bizCode("1").openId("0002").times("0").requestId("123eeasfaerq2").build();
-        chatWithMicrosoftService.callModelAsync(build);
-    }
-    @Test
     void set() {
         RedisUtil.setStringExpiredDay("stdServerCode","o7x86aa-RTJZFlrpIrDW4SI9cQ4Yv30VQntIeqWo4PESAzFuKc4ctQ==",999999999);
     }
