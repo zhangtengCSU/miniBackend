@@ -42,6 +42,7 @@ public class ModelChatThread implements Callable<String> {
 
     ModelChatThread(ChatRequest request) {
         this.bizCode = request.getBiz_id();
+        this.requestId = request.getRequest_id();
         this.openId = request.getOpen_id();
 
         String bizId = request.getBiz_id();
