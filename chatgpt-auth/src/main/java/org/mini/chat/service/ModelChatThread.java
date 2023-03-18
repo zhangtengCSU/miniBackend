@@ -66,8 +66,8 @@ public class ModelChatThread implements Callable<String> {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         // 3.do request
-        String code = RedisUtil.getString("stdServerCode");
-        res = OkHttpUtils.post(BACKEND_URL + code, headers, new Gson().toJson(params));
+        String code = RedisUtil.getString("testCode");
+        res = OkHttpUtils.post(BACKEND_URL_TEST + code, headers, new Gson().toJson(params));
         Jedis jedis = null;
         try {
             jedis = JedisUtil.getJedis();
