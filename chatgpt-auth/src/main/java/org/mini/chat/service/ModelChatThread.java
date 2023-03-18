@@ -37,7 +37,6 @@ public class ModelChatThread implements Callable<String> {
     private String openId;
     private String requestId;
     private Object prompt;
-    private String key4Body;
 
 
     ModelChatThread(ChatRequest request) {
@@ -47,12 +46,10 @@ public class ModelChatThread implements Callable<String> {
         String bizId = request.getBiz_id();
         switch (bizId) {
             case BizIdEnum.CHAT:
-                this.key4Body = "msg";
-                this.prompt = request.getChat_prompt();
+                this.prompt = QueryModelRequest.builder().biz_id(request.getBiz_id()).messages(request.getChat_prompt()).build();
                 break;
             case BizIdEnum.WORD_STORY:
-                this.key4Body = "words";
-                this.prompt = request.getWord_story_prompt();
+                this.prompt = QueryModelRequest.builder().biz_id(request.getBiz_id()).words(request.getWord_story_prompt()).build();
                 break;
             default:
         }
@@ -63,7 +60,7 @@ public class ModelChatThread implements Callable<String> {
         String res = null;
         // 1.make body params
         Map<String, Object> params = new HashMap<>();
-        params.put(this.key4Body, this.prompt);
+        params.put("msg", this.prompt);
         // 2.make header
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");

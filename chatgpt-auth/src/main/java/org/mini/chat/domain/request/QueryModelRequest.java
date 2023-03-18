@@ -15,4 +15,5 @@ import java.util.List;
 public class QueryModelRequest {
     private String biz_id;
     private List<MsgObject> messages;
+    private String words;
 }
