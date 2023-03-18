@@ -29,7 +29,7 @@ public class ChatServiceTest {
 
     @Test
     void set() {
-        RedisUtil.setStringExpiredDay("stdServerCode","o7x86aa-RTJZFlrpIrDW4SI9cQ4Yv30VQntIeqWo4PESAzFuKc4ctQ==",999999999);
+        RedisUtil.setStringExpiredDay("testCode","aQQPXdFcTCBmjE6-jM8RultfXxJph-Izi63nMfOCD-K6AzFuqtzaeg==",999999999);
     }
 
 }

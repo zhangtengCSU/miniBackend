@@ -30,6 +30,7 @@ import java.util.concurrent.Callable;
 public class ModelChatThread implements Callable<String> {
 
     public static final String BACKEND_URL = "https://chatgptforwechat.azurewebsites.net/api/chatgpt_for_wechat?code=";
+    public static final String BACKEND_URL_TEST = "https://gpt-test.azurewebsites.net/api/chatgpt_for_wechat?code=";
     public static final String ANSWER_REDIS_PREFIX = "Answer:";
 
 
