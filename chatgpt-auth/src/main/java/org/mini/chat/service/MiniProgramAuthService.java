@@ -2,7 +2,7 @@ package org.mini.chat.service;
 
 import com.google.gson.Gson;
 import org.mini.chat.domain.MiniAuthRequest;
-import org.mini.chat.domain.WxAuthResponse;
+import org.mini.chat.domain.response.WxAuthResponse;
 import org.mini.common.http.ResponseEnum;
 import org.mini.common.exceptions.GptException;
 import org.mini.common.utils.JwtUtil;

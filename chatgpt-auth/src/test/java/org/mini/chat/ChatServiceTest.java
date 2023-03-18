@@ -3,7 +3,6 @@ package org.mini.chat;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.mini.chat.domain.ChatRequest;
 import org.mini.chat.service.ChatWithMicrosoftService;
 import org.mini.chat.service.cache.CacheService;
 import org.mini.common.utils.RedisUtil;

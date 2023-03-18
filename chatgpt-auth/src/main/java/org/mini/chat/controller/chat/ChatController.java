@@ -1,12 +1,11 @@
 package org.mini.chat.controller.chat;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.mini.chat.domain.response.ChatResponse;
 import org.mini.chat.service.ChatWithMicrosoftService;
 import org.mini.common.http.BaseController;
-import org.mini.chat.domain.ChatRequest;
+import org.mini.chat.domain.request.ChatRequest;
 import org.mini.common.http.GptHttpResponse;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -32,8 +31,8 @@ public class ChatController extends BaseController {
     private ChatWithMicrosoftService chatWithMicrosoftService;
 
     @RequestMapping(value = "/send", method = RequestMethod.POST)
-    public GptHttpResponse<String> chatWithModel(@RequestBody ChatRequest request, @RequestHeader("X-WX-OPENID") String openId) {
-        request.setOpenId(openId);
+    public GptHttpResponse<ChatResponse> chatWithModel(@RequestBody ChatRequest request, @RequestHeader("X-WX-OPENID") String openId) {
+        request.setOpen_id(openId);
         log.info("get OpenId{} in controller",openId);
         log.info("Request:{}", JSONUtil.toJsonStr(request));
         return dealWithException(request, chatWithMicrosoftService::callModelAsync, "call gpt model");
