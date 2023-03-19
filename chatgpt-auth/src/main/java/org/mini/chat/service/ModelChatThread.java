@@ -7,6 +7,7 @@ import org.mini.chat.domain.enums.BizIdEnum;
 import org.mini.chat.domain.request.ChatRequest;
 import org.mini.chat.domain.request.MsgObject;
 import org.mini.chat.domain.request.QueryModelRequest;
+import org.mini.chat.domain.response.ChatResponseFromModelDTO;
 import org.mini.chat.service.cache.CacheService;
 import org.mini.common.redis.JedisUtil;
 import org.mini.common.utils.OkHttpUtils;
@@ -69,10 +70,15 @@ public class ModelChatThread implements Callable<String> {
         // 3.do request
         String code = RedisUtil.getString("testCode");
         res = OkHttpUtils.post(BACKEND_URL_TEST + code, headers, new Gson().toJson(params));
+        ChatResponseFromModelDTO dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
         Jedis jedis = null;
         try {
             jedis = JedisUtil.getJedis();
-            String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 60, res);
+            if ("200".equals(dto.getCode())) {
+                String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, res);
+            } else {
+                log.error("Call Model error:{}",dto.getMessage());
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
         } finally {
