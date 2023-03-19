@@ -1,5 +1,6 @@
 package org.mini.chat.service;
 
+import cn.hutool.json.JSONUtil;
 import com.google.gson.Gson;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -71,11 +72,12 @@ public class ModelChatThread implements Callable<String> {
         String code = RedisUtil.getString("testCode");
         res = OkHttpUtils.post(BACKEND_URL_TEST + code, headers, new Gson().toJson(params));
         ChatResponseFromModelDTO dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
+        log.info("getResponse:{}",JSONUtil.toJsonStr(dto));
         Jedis jedis = null;
         try {
             jedis = JedisUtil.getJedis();
             if ("200".equals(dto.getCode())) {
-                String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, res);
+                String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, dto.getData());
             } else {
                 log.error("Call Model error:{}",dto.getMessage());
             }

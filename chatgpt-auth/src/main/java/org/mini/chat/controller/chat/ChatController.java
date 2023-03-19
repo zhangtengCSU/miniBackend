@@ -33,8 +33,7 @@ public class ChatController extends BaseController {
     @RequestMapping(value = "/send", method = RequestMethod.POST)
     public GptHttpResponse<ChatResponse> chatWithModel(@RequestBody ChatRequest request, @RequestHeader("X-WX-OPENID") String openId) {
         request.setOpen_id(openId);
-        log.info("get OpenId{} in controller",openId);
-        log.info("Request:{}", JSONUtil.toJsonStr(request));
+        log.info("ControllerRequest: {}", JSONUtil.toJsonStr(request));
         return dealWithException(request, chatWithMicrosoftService::callModelAsync, "call gpt model");
     }
 }
