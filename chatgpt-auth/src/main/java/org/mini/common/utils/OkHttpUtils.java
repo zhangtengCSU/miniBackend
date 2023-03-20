@@ -124,7 +124,7 @@ public class OkHttpUtils {
             } else if (response.code() == 400 || response.code() == 500 && Objects.nonNull(response.body())) {
                 String result = response.body().string();
                 log.error("【For debug】params: {},res:{}", json, result);
-                return null;
+                return result;
             } else if (response.code() == 503 || response.code() == 429 && Objects.nonNull(response.body())) {
                 String result = response.body().string();
                 return result;
