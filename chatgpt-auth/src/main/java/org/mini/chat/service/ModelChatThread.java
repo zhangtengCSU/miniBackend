@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.mini.chat.domain.enums.BizIdEnum;
+import org.mini.chat.domain.enums.Url2KeyEnum;
 import org.mini.chat.domain.request.ChatRequest;
 import org.mini.chat.domain.request.MsgObject;
 import org.mini.chat.domain.request.QueryModelRequest;
@@ -62,7 +63,6 @@ public class ModelChatThread implements Callable<String> {
 
     @Override
     public String call() throws Exception {
-        String res = null;
         Jedis jedis = null;
         ChatResponseFromModelDTO dto = ChatResponseFromModelDTO.builder().code("0").build();
         // 1.make body params
@@ -71,15 +71,17 @@ public class ModelChatThread implements Callable<String> {
         // 2.make header
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
+        headers.put("trace-id",this.requestId);
         // 3.do request
-        String code = RedisUtil.getString("testCode");
-        res = OkHttpUtils.post(BACKEND_URL_TEST + code, headers, new Gson().toJson(params));
+        Url2KeyEnum urlEnum = Url2KeyEnum.selectUrl();
+        String code = RedisUtil.getString(urlEnum.getKeyName());
+        String res = OkHttpUtils.post(urlEnum.getUrl() + code, headers, new Gson().toJson(params));
         // 4.parse response
         if (StringUtils.isNotEmpty(res)) {
             dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
             log.info("getResponse:{}",JSONUtil.toJsonStr(dto));
         } else {
-            log.error("Get Null From Microsoft");
+            log.error("catch Exception and null dto object");
         }
         try {
             jedis = JedisUtil.getJedis();
@@ -88,6 +90,7 @@ public class ModelChatThread implements Callable<String> {
             } else if ("503".equals(dto.getCode()) || "429".equals(dto.getCode()) || "400".equals(dto.getCode()) || "500".equals(dto.getCode())) {
                 String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, dto.getCode());
             } else {
+                log.error("get other code:{}",dto.getCode());
                 // do nothing for now
             }
         } catch (Exception e) {

@@ -44,7 +44,7 @@ public class ChatWithMicrosoftService {
                     return ChatResponse.builder().msg("哎呀，服务器满载了，请稍等后再发送，或联系开发者gptplus@163.com反馈一下吧！").code("500").build();
                 }
                 if (0 <= times && times < 6) {
-                    log.info("The request: {} time out for times: {}",request.getRequest_id(),request.getTimes());
+                    log.info("The request: {} time out for times - {}",request.getRequest_id(),request.getTimes());
                     return null;
                 }
             }
