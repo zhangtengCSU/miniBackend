@@ -1,6 +1,8 @@
 package org.mini.chat.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mini.chat.domain.enums.MicrosoftResponseCode;
+import org.mini.chat.domain.enums.MicrosoftResponseEnum;
 import org.mini.chat.domain.request.ChatRequest;
 import org.mini.chat.domain.response.ChatResponse;
 import org.mini.chat.service.cache.CacheService;
@@ -36,13 +38,13 @@ public class ChatWithMicrosoftService {
         // 2.if not,query cache
         while (true) {
             Long nowTime = GptDateUtil.currentSystemTimeAsLong();
-            // a. no response
+//             a. no response
             if (nowTime - startTime > 10 * 1000) {
                 if (times == 6) {
                     return ChatResponse.builder().msg("哎呀，服务器满载了，请稍等后再发送，或联系开发者gptplus@163.com反馈一下吧！").code("500").build();
                 }
                 if (0 <= times && times < 6) {
-                    log.info("main finished because timeout,so return to wait for another call");
+                    log.info("The request: {} time out for times: {}",request.getRequest_id(),request.getTimes());
                     return null;
                 }
             }
@@ -60,7 +62,13 @@ public class ChatWithMicrosoftService {
                 }
             }
             if (StringUtils.hasText(answer)) {
-                return ChatResponse.builder().msg(answer).code("200").build();
+                if (MicrosoftResponseCode.THROWABLE_ERROR.contains(answer)) {
+                    return ChatResponse.builder().msg(MicrosoftResponseEnum.getMsg(answer)).code("500").build();
+                } else if (MicrosoftResponseCode.NOT_THROWABLE_ERROR.contains(answer)) {
+                    return ChatResponse.builder().msg("哎呀，服务器满载了，请稍等后再发送，或联系开发者gptplus@163.com反馈一下吧！").code("500").build();
+                } else {
+                    return ChatResponse.builder().msg(answer).code("200").build();
+                }
             }
         }
 

@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.google.gson.Gson;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.mini.chat.domain.enums.BizIdEnum;
 import org.mini.chat.domain.request.ChatRequest;
 import org.mini.chat.domain.request.MsgObject;
@@ -62,6 +63,8 @@ public class ModelChatThread implements Callable<String> {
     @Override
     public String call() throws Exception {
         String res = null;
+        Jedis jedis = null;
+        ChatResponseFromModelDTO dto = ChatResponseFromModelDTO.builder().code("0").build();
         // 1.make body params
         Map<String, Object> params = new HashMap<>();
         params.put("msg", this.prompt);
@@ -71,15 +74,21 @@ public class ModelChatThread implements Callable<String> {
         // 3.do request
         String code = RedisUtil.getString("testCode");
         res = OkHttpUtils.post(BACKEND_URL_TEST + code, headers, new Gson().toJson(params));
-        ChatResponseFromModelDTO dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
-        log.info("getResponse:{}",JSONUtil.toJsonStr(dto));
-        Jedis jedis = null;
+        // 4.parse response
+        if (StringUtils.isNotEmpty(res)) {
+            dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
+            log.info("getResponse:{}",JSONUtil.toJsonStr(dto));
+        } else {
+            log.error("Get Null From Microsoft");
+        }
         try {
             jedis = JedisUtil.getJedis();
             if ("200".equals(dto.getCode())) {
                 String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, dto.getData());
+            } else if ("503".equals(dto.getCode()) || "429".equals(dto.getCode()) || "400".equals(dto.getCode()) || "500".equals(dto.getCode())) {
+                String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, dto.getCode());
             } else {
-                log.error("Call Model error:{}",dto.getMessage());
+                // do nothing for now
             }
         } catch (Exception e) {
             log.error(e.getMessage());

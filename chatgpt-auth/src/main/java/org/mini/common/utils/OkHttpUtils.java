@@ -119,11 +119,18 @@ public class OkHttpUtils {
             Response response = HTTP_CLIENT.newCall(request).execute();
             if (response.isSuccessful() && Objects.nonNull(response.body())) {
                 String result = response.body().string();
-                log.info("execute 【post】 url: {}, header: {} ,params: {} success，returns: {}", url, headers, json, result);
+                log.info("SUCCESS to execute 【post】 url: {} ,params: {} ，returns: {}", url, json, result);
+                return result;
+            } else if (response.code() == 400 || response.code() == 500 && Objects.nonNull(response.body())) {
+                String result = response.body().string();
+                log.error("【For debug】params: {},res:{}", json, result);
+                return null;
+            } else if (response.code() == 503 || response.code() == 429 && Objects.nonNull(response.body())) {
+                String result = response.body().string();
                 return result;
             }
         } catch (Exception e) {
-            log.error("execute 【post】 url: {}  params: {} failed!", url, json, e);
+            log.error("FAILED to execute 【post】 url: {}  params: {} !", url, json, e);
         }
         return null;
     }
