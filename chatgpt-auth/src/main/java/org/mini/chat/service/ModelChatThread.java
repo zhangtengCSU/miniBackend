@@ -67,16 +67,16 @@ public class ModelChatThread implements Callable<String> {
         ChatResponseFromModelDTO dto = ChatResponseFromModelDTO.builder().code("0").build();
         // 1.make body params
         Map<String, Object> params = new HashMap<>();
-        params.put("msg", this.prompt);
+        params.put4("msg", this.prompt);
         // 2.make header
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
         headers.put("trace-id",this.requestId);
         // 3.do request
         Url2KeyEnum urlEnum = Url2KeyEnum.selectUrl();
-//        String code = RedisUtil.getString(urlEnum.getKeyName());
-//        String res = OkHttpUtils.post(urlEnum.getUrl() + code, headers, new Gson().toJson(params));
-        String res = OkHttpUtils.post("https://test-gptforwechat.gptpluseve.workers.dev/",headers, new Gson().toJson(params));
+        String code = RedisUtil.getString(urlEnum.getKeyName());
+        String res = OkHttpUtils.post(urlEnum.getUrl() + code, headers, new Gson().toJson(params));
+//        String res = OkHttpUtils.post("https://test-gptforwechat.gptpluseve.workers.dev/",headers, new Gson().toJson(params));
         // 4.parse response
         if (StringUtils.isNotEmpty(res)) {
             dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
