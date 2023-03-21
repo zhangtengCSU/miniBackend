@@ -74,8 +74,9 @@ public class ModelChatThread implements Callable<String> {
         headers.put("trace-id",this.requestId);
         // 3.do request
         Url2KeyEnum urlEnum = Url2KeyEnum.selectUrl();
-        String code = RedisUtil.getString(urlEnum.getKeyName());
-        String res = OkHttpUtils.post(urlEnum.getUrl() + code, headers, new Gson().toJson(params));
+//        String code = RedisUtil.getString(urlEnum.getKeyName());
+//        String res = OkHttpUtils.post(urlEnum.getUrl() + code, headers, new Gson().toJson(params));
+        String res = OkHttpUtils.post("https://test-gptforwechat.gptpluseve.workers.dev/",headers, new Gson().toJson(params));
         // 4.parse response
         if (StringUtils.isNotEmpty(res)) {
             dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
