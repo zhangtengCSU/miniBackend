@@ -67,7 +67,7 @@ public class ModelChatThread implements Callable<String> {
         ChatResponseFromModelDTO dto = ChatResponseFromModelDTO.builder().code("0").build();
         // 1.make body params
         Map<String, Object> params = new HashMap<>();
-        params.put4("msg", this.prompt);
+        params.put("msg", this.prompt);
         // 2.make header
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
