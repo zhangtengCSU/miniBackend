@@ -7,8 +7,8 @@ import java.util.Random;
 @Getter
 public enum Url2KeyEnum {
     URL1("https://chatgptforwechat.azurewebsites.net/api/chatgpt_for_wechat?code=", "stdServerCode"),
-    URL2("https://gpt-test.azurewebsites.net/api/chatgpt_for_wechat?code=", "testCode");
-
+    URL2("https://gpt-test.azurewebsites.net/api/chatgpt_for_wechat?code=", "testCode"),
+    URL3("https://gptforwechat-1.gptpluseve.workers.dev?code=","cfCode");
     private String url;
     private String keyName;
 
@@ -24,5 +24,8 @@ public enum Url2KeyEnum {
         } else {
             return URL2;
         }
+    }
+    public static Url2KeyEnum useCfCode() {
+        return URL3;
     }
 }

@@ -42,7 +42,7 @@ public class ChatServiceTest {
 
     @Test
     void set() throws InterruptedException {
-//        RedisUtil.setStringExpiredDay("testCode","",999999999);
+//        RedisUtil.setStringExpiredDay("cfCode","",999999999);
 //        ChatRequest build = ChatRequest.builder().times("0").request_id("xx").open_id("xxx").biz_id("1").word_story_prompt("你好").build();
 //        chatWithMicrosoftService.callModelAsync(build);
     }
