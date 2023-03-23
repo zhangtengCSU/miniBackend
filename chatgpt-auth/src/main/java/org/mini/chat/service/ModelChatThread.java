@@ -91,7 +91,7 @@ public class ModelChatThread implements Callable<String> {
             } else if ("503".equals(dto.getCode()) || "429".equals(dto.getCode()) || "400".equals(dto.getCode()) || "500".equals(dto.getCode())) {
                 String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, dto.getCode());
             } else {
-                log.error("get other code:{}",dto.getCode());
+                log.error("get other code:{}" + JSONUtil.toJsonStr(dto),dto.getCode());
                 // do nothing for now
             }
         } catch (Exception e) {
