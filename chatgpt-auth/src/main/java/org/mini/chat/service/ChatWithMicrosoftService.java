@@ -71,7 +71,6 @@ public class ChatWithMicrosoftService {
                 }
             }
         }
-
     }
 
     private void doThreadTask(ChatRequest request) {

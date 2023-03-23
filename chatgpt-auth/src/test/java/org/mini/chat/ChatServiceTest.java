@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.mini.chat.controller.chat.ChatController;
 import org.mini.chat.domain.request.ChatRequest;
+import org.mini.chat.domain.request.MsgObject;
 import org.mini.chat.domain.response.ChatResponse;
 import org.mini.chat.domain.response.ChatResponseFromModelDTO;
 import org.mini.chat.domain.response.ChatWithModelDTO;
@@ -17,7 +18,9 @@ import org.mini.common.utils.RedisUtil;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,8 +46,11 @@ public class ChatServiceTest {
     @Test
     void set() throws InterruptedException {
 //        RedisUtil.setStringExpiredDay("cfCode","",999999999);
-//        ChatRequest build = ChatRequest.builder().times("0").request_id("xx").open_id("xxx").biz_id("1").word_story_prompt("你好").build();
-//        chatWithMicrosoftService.callModelAsync(build);
+        MsgObject build1 = MsgObject.builder().role("user").content("你好").build();
+        List<MsgObject> msg = new ArrayList<>();
+        msg.add(build1);
+        ChatRequest build = ChatRequest.builder().times("0").request_id("xx12").open_id("xxx").biz_id("1").chat_prompt(msg).build();
+        chatWithMicrosoftService.callModelAsync(build);
     }
 
 }

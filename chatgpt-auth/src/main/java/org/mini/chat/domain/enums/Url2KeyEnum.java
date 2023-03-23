@@ -26,6 +26,6 @@ public enum Url2KeyEnum {
         }
     }
     public static Url2KeyEnum useCfCode() {
-        return URL3;
+        return URL1;
     }
 }
