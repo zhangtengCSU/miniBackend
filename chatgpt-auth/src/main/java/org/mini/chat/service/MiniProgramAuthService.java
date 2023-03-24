@@ -19,6 +19,7 @@ import java.util.Map;
  * @Author Rookie
  */
 @Service
+@Deprecated
 public class MiniProgramAuthService {
     public static final String URL_MINI_AUTH = "https://api.weixin.qq.com/sns/jscode2session";
 

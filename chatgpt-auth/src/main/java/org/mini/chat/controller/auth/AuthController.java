@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 @RestController
 @Slf4j
 @RequestMapping("/auth")
+@Deprecated
 public class AuthController extends BaseController {
 
     @Override

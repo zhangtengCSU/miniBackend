@@ -33,6 +33,7 @@ public class ChatController extends BaseController {
     @RequestMapping(value = "/send", method = RequestMethod.POST)
     public GptHttpResponse<ChatResponse> chatWithModel(@RequestBody ChatRequest request, @RequestHeader("X-WX-OPENID") String openId) {
         request.setOpen_id(openId);
+        // 只打印第一次请求的参数。
         if (request.getTimes().equals("0")) {
             log.info("【Request】: {}", JSONUtil.toJsonStr(request));
         }

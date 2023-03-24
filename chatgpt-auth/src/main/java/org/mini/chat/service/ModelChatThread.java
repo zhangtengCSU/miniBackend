@@ -6,22 +6,18 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.mini.chat.domain.enums.BizIdEnum;
+import org.mini.chat.domain.enums.MicrosoftResponseCode;
 import org.mini.chat.domain.enums.Url2KeyEnum;
 import org.mini.chat.domain.request.ChatRequest;
-import org.mini.chat.domain.request.MsgObject;
 import org.mini.chat.domain.request.QueryModelRequest;
 import org.mini.chat.domain.response.ChatResponseFromModelDTO;
-import org.mini.chat.service.cache.CacheService;
 import org.mini.common.redis.JedisUtil;
 import org.mini.common.utils.OkHttpUtils;
 import org.mini.common.utils.RedisUtil;
 import redis.clients.jedis.Jedis;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.Callable;
 
 /**
@@ -71,7 +67,7 @@ public class ModelChatThread implements Callable<String> {
         // 2.make header
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
-        headers.put("trace-id",this.requestId);
+        headers.put("trace-id", this.requestId);
         // 3.do request
         Url2KeyEnum urlEnum = Url2KeyEnum.useCfCode();
         String url = urlEnum.getUrl() + RedisUtil.getString(urlEnum.getKeyName());
@@ -80,7 +76,6 @@ public class ModelChatThread implements Callable<String> {
         // 4.parse response
         if (StringUtils.isNotEmpty(res)) {
             dto = new Gson().fromJson(res, ChatResponseFromModelDTO.class);
-            log.info("getResponse:{}",JSONUtil.toJsonStr(dto));
         } else {
             log.error("catch Exception and null dto object");
         }
@@ -88,10 +83,10 @@ public class ModelChatThread implements Callable<String> {
             jedis = JedisUtil.getJedis();
             if ("200".equals(dto.getCode())) {
                 String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, dto.getData());
-            } else if ("503".equals(dto.getCode()) || "429".equals(dto.getCode()) || "400".equals(dto.getCode()) || "500".equals(dto.getCode())) {
+            } else if (MicrosoftResponseCode.THROWABLE_ERROR.contains(dto.getCode())) {
                 String setex = jedis.setex(ANSWER_REDIS_PREFIX + openId + ":" + requestId, 120, dto.getCode());
             } else {
-                log.error("get other code:{}" + JSONUtil.toJsonStr(dto),dto.getCode());
+                log.error("get other code:{}" + JSONUtil.toJsonStr(dto), dto.getCode());
                 // do nothing for now
             }
         } catch (Exception e) {
@@ -101,7 +96,6 @@ public class ModelChatThread implements Callable<String> {
                 jedis.close();
             }
         }
-        log.info("child thread finished");
         return res;
     }
 

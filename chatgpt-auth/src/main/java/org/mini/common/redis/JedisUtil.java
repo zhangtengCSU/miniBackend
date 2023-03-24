@@ -21,7 +21,7 @@ public class JedisUtil {
         config.setMaxIdle(100);
         // 创建连接池
         jedisPool = new JedisPool(config, "43.139.207.55", 6379, 2000, "zt990413");
-        log.info("jedis pool init Succeed" + jedisPool.isClosed());
+        log.info("jedis pool init Succeed,if Closed: " + jedisPool.isClosed());
     }
     /**
      * 获取redis连接

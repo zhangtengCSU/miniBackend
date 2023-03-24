@@ -17,6 +17,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
+@Deprecated
 public class CacheService {
     public static final String ANSWER_REDIS_PREFIX = "Answer:";
 
